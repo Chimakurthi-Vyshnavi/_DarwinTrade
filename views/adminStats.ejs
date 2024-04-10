@@ -1,0 +1,236 @@
+<%- include('adminHeader.ejs')%>
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="col-lg-8 mb-4 order-0">
+            <div class="card">
+                <div class="d-flex align-items-end row">
+                    <div class="col-sm-7">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">Welcome to the Admin Dashboard! 🎉</h5>
+                            <p class="mb-4">
+                                You're now part of our community. We're glad to have you here!"
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 text-center text-sm-left">
+                        <div class="card-body pb-0 px-0 px-md-4">
+                            <img src="/img/man-with-laptop-light.png" height="140"
+                                alt="View Badge User" data-app-dark-img="illustrations/man-with-laptop-dark.png"
+                                data-app-light-img="illustrations/man-with-laptop-light.png" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <!-- Order Statistics -->
+        <div class="col-md-6 col-lg-4 col-xl-4 order-0 ">
+            <div class="card h-100">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <div class="card-title mb-0">
+                        <h5 class="m-0 me-2">Order Statistics</h5>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex flex-column align-items-center gap-1">
+                            <h2 class="mb-2 orderNum"></h2>
+                            <span>Total Orders</span>
+                        </div>
+                        <div id="orderStatisticsChart"></div>
+                    </div>
+                    <ul class="p-0 m-0 statList">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--/ Order Statistics -->
+    </div>
+    <script>
+        const encodedData = "<%= stats %>";
+        var decodedData = decodeURIComponent(encodedData.replace(/&#34;/g, '"'));
+        decodedData = decodeURIComponent(decodedData.replace(/&#39;/g, "'"))
+        const stats = JSON.parse(decodedData)
+        const labels = [], series = [];
+        const ul = document.getElementsByClassName('statList')[0]
+        stats.forEach(stat => {
+            labels.push(stat._id);
+            series.push(stat.quantity);
+
+            const avatar = document.createElement('div')
+            avatar.className = 'avatar flex-shrink-0 me-3'
+            const avatar_initial = document.createElement('span')
+            avatar_initial.className = 'avatar-initial rounded bg-label-primary'
+            const icon = document.createElement('i')
+            icon.className = ''
+            avatar_initial.appendChild(icon)
+            avatar.appendChild(avatar_initial)
+
+            const container = document.createElement('div')
+            container.className = 'd-flex w-100 flex-wrap align-items-center justify-content-between gap-2'
+            const title = document.createElement('div')
+            title.className = 'me-2'
+            const header = document.createElement('h6')
+            header.className = 'mb-0'
+            header.innerHTML = stat._id
+            title.appendChild(header)
+
+            const progress = document.createElement('div')
+            progress.className = 'user-progress'
+            const quantity = document.createElement('small')
+            quantity.className = 'fw-semibold'
+            quantity.innerHTML = stat.quantity
+            progress.appendChild(quantity)
+
+            container.appendChild(title)
+            container.appendChild(progress)
+
+            const li = document.createElement('li')
+            li.className = 'd-flex mb-4 pb-1'
+            li.appendChild(avatar)
+            li.appendChild(container)
+            ul.appendChild(li)
+        });
+        const sum = series.reduce((partialSum, a) => partialSum + a, 0)
+        const order = document.getElementsByClassName('orderNum')[0]
+        order.textContent = sum
+        const donutChartEl = document.querySelector('#orderStatisticsChart'),
+            donutChartConfig = {
+                chart: {
+                    height: 390,
+                    type: 'donut'
+                },
+                labels: labels,
+                series: series,
+                colors: ['#fee802', '#2B9BF4', '#826BF8', '#3FD0BD', '#ff084e', '#ffab00', '#EBEEF0', '#8592A3'],
+                stroke: {
+                    show: false,
+                    curve: 'straight'
+                },
+                dataLabels: {
+                    enabled: true,
+                    formatter: function (val, opt) {
+                        return parseInt(val, 10) + '%';
+                    }
+                },
+                legend: {
+                    show: true,
+                    position: 'bottom',
+                    markers: { offsetX: -3 },
+                    itemMargin: {
+                        vertical: 3,
+                        horizontal: 10
+                    },
+                    labels: {
+                        useSeriesColors: false
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        donut: {
+                            labels: {
+                                show: true,
+                                name: {
+                                    fontSize: '2rem',
+                                    fontFamily: 'Open Sans'
+                                },
+                                value: {
+                                    fontSize: '1.2rem',
+                                    fontFamily: 'Open Sans',
+                                    formatter: function (val) {
+                                        return parseInt(val * 100 / sum, 10) + '%';
+                                    }
+                                },
+                                total: {
+                                    show: true,
+                                    fontSize: '1.2rem',
+                                    label: labels[0],
+                                    formatter: function (w) {
+                                        return parseInt(series[0] * 100 / sum, 10) + '%';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                responsive: [
+                    {
+                        breakpoint: 992,
+                        options: {
+                            chart: {
+                                height: 380
+                            },
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    useSeriesColors: false
+                                }
+                            }
+                        }
+                    },
+                    {
+                        breakpoint: 576,
+                        options: {
+                            chart: {
+                                height: 320
+                            },
+                            plotOptions: {
+                                pie: {
+                                    donut: {
+                                        labels: {
+                                            show: true,
+                                            name: {
+                                                fontSize: '1.5rem'
+                                            },
+                                            value: {
+                                                fontSize: '1rem'
+                                            },
+                                            total: {
+                                                fontSize: '1.5rem'
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    useSeriesColors: false
+                                }
+                            }
+                        }
+                    },
+                    {
+                        breakpoint: 420,
+                        options: {
+                            chart: {
+                                height: 280
+                            },
+                            legend: {
+                                show: false
+                            }
+                        }
+                    },
+                    {
+                        breakpoint: 360,
+                        options: {
+                            chart: {
+                                height: 250
+                            },
+                            legend: {
+                                show: false
+                            }
+                        }
+                    }
+                ]
+            };
+        if (typeof donutChartEl !== undefined && donutChartEl !== null) {
+            const donutChart = new ApexCharts(donutChartEl, donutChartConfig);
+            donutChart.render();
+        }
+    </script>
+
+<%- include('adminFooter.ejs')%>

@@ -1,0 +1,135 @@
+<%- include('header.ejs')%>
+
+
+
+<!-- Shop Details Section Begin -->
+<section class="shop-details">
+    <div class="product__details__pic">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="product__details__breadcrumb">
+                        <a href="/home">Home</a>
+                        <a href="/shop">Shop</a>
+                        <span>Product Details</span>
+                    </div>
+                </div>
+            </div>
+            
+            
+
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <% for(let i=0; i<product[0].images.length; i++) {%>
+                            <li class="nav-item tabs_toggler" data-filter="<%= product[0].images[i]%>" id="<%= i%>">
+                                <div class="nav-link active" data-toggle="tab" role="tab">
+                                    <div class="product__thumb__pic set-bg" data-setbg="<%= product[0].images[i]%>">
+                                        <img src="<%= product[0].images[i] %>" alt="Product Image">
+                                    </div>
+                                </div>
+                            </li>
+                        <%}%>
+                    </ul>
+                </div>
+                <div class="col-lg-6 col-md-9">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tabs-0" role="tabpanel">
+                            <div class="product__details__pic__item">
+                                <img src="<%= product[0].images[0]%>" alt="">
+                            </div>
+                        </div> 
+                        <% for (let i = 0; i < product[0].images.length; i++) { %>
+                            <div class="tab-pane" id="tabs-<%= i %>" role="tabpanel">
+                                <div class="product__details__pic__item">
+                                    <img src="<%= product[0].images[i] %>" alt="Product Image">
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            
+           
+             
+            
+            
+           
+            
+        </div>
+    </div>
+    <div class="product__details__content">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-8">
+                    <div class="product__details__text">
+                        <h4><%= product[0].title%></h4>
+                        <div class="rating">
+                            <% for (let i=1; i <=5; i++) { %>
+                         <% if (i <=Math.floor(product[0].rating)) { %>
+                             <i class="fa fa-star text-warning"></i>
+                             <% } else if (i - product.rating <=0.5) { %>
+                                 <i class="fa fa-star-half-alt text-warning "></i>
+                                 <% } else { %>
+                                     <i class="fa fa-star-o "></i> 
+                                     <% } %>
+                                         <% } %>
+                        </div>
+                        <h3><%= product[0].price%> points<span></span></h3>
+                        <p><%= product[0].description%></p>
+                        <div class="product__details__option">
+                        </div>
+                        <div class="product__details__cart__option">
+                            <div class="quantity">
+                                <div class="pro-qty">
+                                    <input type="text" class="productQuantity" value="1">
+                                </div>
+                            </div>
+                            <a href="javascript:void(0);" class="primary-btn add-cart"  data-id="<%= product[0]._id %>"
+                                data-name="<%= product[0].title %>"
+                                data-price="<%= product[0].price %>"
+                                data-image="<%= product[0].thumbnail %>">add to cart</a>
+                        </div>
+                        <div class="product__details__last__option">
+                            <ul>
+                                <li><span>SKU:</span> <%= product[0].stock%></li>
+                                <li><span>Brand:</span> <%= product[0].brand%></li>
+                                <li><span>Categories:</span> <%= product[0].category%></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shop Details Section End -->
+<br>
+    <!-- Footer Section Begin -->
+    <%- include('footer.ejs')%>
+        <!-- Footer Section End -->
+        <script>
+           document.addEventListener('DOMContentLoaded', function() {
+    const tabTogglers = document.querySelectorAll('.tabs_toggler');
+    tabTogglers.forEach(function(toggler) {
+        toggler.addEventListener('click', function() {
+            const targetId = this.getAttribute('id');
+            const targetTab = document.querySelector(`#tabs-${targetId}`);
+            if (targetTab) {
+                // Remove 'active' class from all tab content elements
+                document.querySelectorAll('.tab-pane').forEach(function(tabContent) {
+                    tabContent.classList.remove('active');
+                });
+                // Add 'active' class to the target tab content
+                targetTab.classList.add('active');
+            } else {
+                console.error('Tab content not found for target:', targetId);
+            }
+        });
+    });
+});
+
+
+
+        </script>
+        

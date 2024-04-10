@@ -1,0 +1,122 @@
+<%- include('header.ejs')%>
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__text">
+                        <h4>My Wishlist</h4>
+                        <div class="breadcrumb__links">
+                            <a href="">Home</a>
+                            <span>Wishlist</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+<!-- <section class="shop spad">
+    <div class="container">
+        <div class="row product_container">
+            <% wishlistItems.forEach(wishlist => {
+                wishlist.items.forEach(item => { %>
+                    <div class="col-lg-3 col-md-6 col-sm-6 category_products" 
+                         data-value="<%= item.price %>"
+                         id="<%= item._id %>">
+                        <div class="product__card" data-product-id="<%= item.productId %>">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg"> <img src="<%= item.imageUrl %>" alt="Product Image">
+                                 
+    
+
+                                    <ul class="product__hover">
+                                        <li class="wish">
+                                            <a href="javascript:void(0);" class="add-to-wishlist" 
+                                               data-id="<%= item.productId %>"
+                                               data-name="<%= item.name %>"
+                                               data-price="<%= item.price %>"
+                                               data-image="<%= item.imageUrl %>">
+                                               <i class="far fa-times-circle" style="color: #0f0f10;"></i>
+                                            </a> 
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6><%= item.name %></h6>
+                                    <a href="javascript:void(0);" class="add-cart" data-id="<%= item.productId %>"
+                                        data-name="<%= item.name %>"
+                                        data-price="<%= item.price %>"
+                                        data-image="<%= item.imageUrl %>">+ Add To Cart</a>
+                                    <h5><%= item.price %> points</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% });
+            }); %> 
+           
+            
+        </div>
+    </div>
+</section> -->
+
+<section class="shop spad">
+    <div class="container">
+        <div class="row product_container">
+           
+            <!-- <% console.log(wishlistItems) %> -->
+            <% if (!wishlistItems || !wishlistItems[0].items || wishlistItems[0].items.length === 0)   { %>
+                <div class="col-lg-12">
+                    <h6>Your wishlist is empty!</h6>
+                </div>
+                  
+            <% } else { %>
+                <% wishlistItems.forEach(wishlist => {
+                    wishlist.items.forEach(item => { %>
+                        <div class="col-lg-3 col-md-6 col-sm-6 category_products" 
+                             data-value="<%= item.price %>"
+                             id="<%= item.productId %>">
+                            <div class="product__card" data-product-id="<%= item.productId %>">
+                                <div class="product__item">
+                                    <div class="product__item__pic set-bg"> <img src="<%= item.imageUrl %>" alt="Product Image">
+                                        <!-- style="background-image: url('<%= item.imageUrl %>');"> -->
+        
+
+                                        <ul class="product__hover">
+                                            <li class="wish">
+                                                <a href="javascript:void(0);" class="add-to-wishlist" 
+                                                data-id="<%= item.productId %>"
+                                                data-name="<%= item.name %>"
+                                                data-price="<%= item.price %>"
+                                                data-image="<%= item.imageUrl %>">
+                                                <i class="far fa-times-circle" style="color: #0f0f10;"></i>
+                                                </a> 
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <h6><%= item.name %></h6>
+                                        <a href="javascript:void(0);" class="add-cart" data-id="<%= item.productId %>"
+                                            data-name="<%= item.name %>"
+                                            data-price="<%= item.price %>"
+                                            data-image="<%= item.imageUrl %>">+ Add To Cart</a>
+                                        <h5><%= item.price %> points</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% });
+                }); %> 
+            <% } %>
+        </div>
+    </div>
+</section>
+<br>
+
+
+    <!-- Footer Section Begin -->
+    <%- include('footer.ejs')%>
+        <!-- Footer Section End -->

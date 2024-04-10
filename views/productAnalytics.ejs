@@ -1,0 +1,23 @@
+<%- include('vendorHeader.ejs')%>
+
+<div class='container-xxl flex-grow-1 container-p-y'>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Product /</span> Product Analytics</h4>
+    <h6 class="pb-1 mb-4 text-muted">Products</h6>
+    <div class="row row-cols-1 row-cols-md-3 g-4 mb-5 product_container">
+        <% products.forEach(product=>{%>
+            <div class="col product" data-filter="<%= product.id%>">
+                <div class="card h-100">
+                    <img class="card-img-top" src="<%= product.thumbnail%>" alt="Card image cap" width="100px" height="400px" />
+                    <div class="card-body">
+                        <h5 class="card-title"><%= product.title%></h5>
+                        <p class="card-text">
+                           <%= product.note%>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        <%})%>
+    </div>
+</div>
+  
+<%- include('vendorFooter.ejs')%>

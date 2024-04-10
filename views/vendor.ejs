@@ -1,0 +1,159 @@
+<%- include('vendorHeader.ejs')%>
+
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span>Add a Product</h4>
+
+            <!-- Basic Layout -->
+            <div class="row">
+                <div class="col-xl">
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Product Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method='POST' class="addProduct" 
+                                enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <label class="form-label" for="basic-default-fullname">Title</label>
+                                    <input type="text" class="form-control" id="basic-default-fullname" name="title"
+                                        placeholder="Enter Product Title" value="" required/>
+                                    <div class="titleError text-danger"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="basic-default-fullname">Short
+                                        Description</label>
+                                    <input type="text" class="form-control" id="basic-default-fullname"
+                                        name="shortdescription" placeholder="Enter Short Description" value="" required/>
+                                    <div class="shortdescriptionError text-danger"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="basic-default-fullname">Brand</label>
+                                    <input type="text" class="form-control" id="basic-default-fullname" name="brand"
+                                        placeholder="Enter Brand" value="" required/>
+                                    <div class="brandError text-danger"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="basic-default-phone">Price</label>
+                                    <input type="number" id="basic-default-phone" class="form-control phone-mask"
+                                        name="price" placeholder="Enter Price" value="" required/>
+                                    <div class="priceError text-danger"></div>
+                                </div>
+                                <style>
+                                    .scrollable-menu {
+                                        height: auto;
+                                        max-height: 200px;
+                                        overflow-x: hidden;
+                                    }
+
+                                    .dropdown-menu {
+                                        position: absolute;
+                                        inset: 0px auto auto 0px;
+                                        margin: 0px;
+                                        transform: translate3d(0px, 41px, 0px);
+                                    }
+
+                                    .image-container {
+                                        display: inline-block;
+                                        margin-right: 20px;
+                                    }
+
+                                </style>
+                                <div class="col-xl-6">
+                                    <label class="form-label">Category</label>
+                                    <div class="demo-inline-spacing">
+                                        <div class="btn-group">
+                                            <button type="button"
+                                                class="btn btn-primary dropdown-toggle dropdown1"
+                                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                                data-bs-target="dropdown-menu1" id='categoryButton' required>
+                                                Choose Category
+                                            </button>
+                                            <input type="text" name="category" value="" style="opacity: 0;" required/>
+                                            <ul class="dropdown-menu scrollable-menu" id="dropdown-menu1">
+                                                <li>
+                                                    <h6 class="dropdown-header text-uppercase">Category</h6>
+                                                </li>
+                                                <% categories.forEach(category=>{%>
+                                                    <li><a class="dropdown-item category-item" data-bs-target="dropdown-menu1"
+                                                            data-bs-filter="dropdown1" value="<%= category.category%>">
+                                                            <%= category.category%>
+                                                        </a></li>
+                                                    <%})%>
+                                            </ul>
+                                            <div class="categoryError text-danger"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-3 button-wrapper">
+                                    <label class="form-label fw-semibold">Thumbnail</label>
+                                    <br>
+                                    <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                        <span class="d-none d-sm-block">Upload photo</span>
+                                        <i class="bx bx-upload d-block d-sm-none"></i>
+                                        <input type="file" id="upload" class="account-file-input thumbnail" style="opacity: 0;"
+                                            accept="image/png, image/jpeg, image/jpg" name="thumbnail"/>
+                                    </label>
+                                    <img id='previewImage' src=""
+                                        style="max-width: 300px; max-height: 300px; display: none;" />
+                                    <h6 id="filename" class="mt-1"></h6>
+                                </div>
+                                <div class="button-wrapper">
+                                    <label class="form-label fw-semibold">Images</label>
+                                    <br>
+                                    <label for="uploads" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                        <span class="d-none d-sm-block">Upload photos</span>
+                                        <i class="bx bx-upload d-block d-sm-none"></i>
+                                        <input type="file" id="uploads" class="account-file-input" style="opacity: 0;"
+                                            accept="image/png, image/jpeg, image/jpg" name="images" multiple/>
+                                    </label>
+                                    <div id="imageContainer"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="basic-default-phone">Available Stock</label>
+                                    <input type="number" id="basic-default-phone" class="form-control phone-mask"
+                                        placeholder="Enter Stock" name="stock" value="" required/>
+                                    <div class="stockError text-danger"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="basic-default-phone">Min Stock</label>
+                                    <input type="number" id="basic-default-phone" class="form-control phone-mask"
+                                        placeholder="Enter Minimum Stock" name="minStock" value="" required/>
+                                    <div class="minStockError text-danger"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="basic-default-message">Description</label>
+                                    <textarea id="basic-default-message" class="form-control" rows="8" cols="40"
+                                        placeholder="Write Product Description" name="productDescription" value="" required></textarea>
+                                    <div class="productDescriptionError text-danger"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="basic-default-message">Note</label>
+                                    <textarea id="basic-default-message" class="form-control" rows="4" cols="40"
+                                        placeholder="Write a Short Note" name="note" value="" required></textarea>
+                                    <div class="noteError text-danger"></div>
+                                </div>
+                                <button type="submit" class="btn btn-primary" value="" id="outsideClick">Add</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- / Content -->
+    <div class="content-backdrop fade"></div>
+    <!-- Content wrapper -->
+    </div>
+    <!-- / Layout page -->
+    </div>
+    <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+
+    <%- include('vendorFooter.ejs')%>

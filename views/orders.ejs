@@ -1,0 +1,330 @@
+<%- include('header.ejs')%>
+<script>
+    $(document).ready(function() {
+    // Remove click event handlers from quantity buttons
+    $('.pro-qty-2').off('click');
+});
+</script>
+
+    <section class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__text">
+                        <h4>My Orders</h4>
+                        <div class="breadcrumb__links">
+                            <a href="/home">Home</a>
+                            <!-- <a href="./shop.html">Shop</a> -->
+                            <span>My Orders</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="shopping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shopping__cart__table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th>Date of Purchase</th>
+                                </tr>
+                            </thead>
+                            <!-- <tbody>
+                                <% if (orders.length > 0) { %>
+                                    <% orders.forEach(order => { %>
+                                        <% order.items.forEach(item => { %>
+                                            <tr>
+                                                <td class="product__cart__item">
+                                                    <div class="product__cart__item__pic">
+                                                        <img style="max-width: 100px; max-height: 100px;" src="<%= item.imageUrl %>" alt="<%= item.name %>">
+                                                    </div>
+                                                     <div class="product__cart__item__text">
+                                                        <h6><%= item.name %></h6>
+                                                        <h5><%= item.price %> points</h5>
+                                                    </div> 
+                                                </td>
+                                                <td class="quantity__item">
+                                                    <div class="quantity">
+                                                        <div class="pro-qty-2">
+                                                            <input type="text" value="<%= item.quantity %>" readonly>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="cart__price"><%= item.quantity * item.price %> points</td>
+                                                <td class="cart__price"><%= new Date(order.placedAt).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }) %></td>
+
+                                            </tr>
+                                        <% }) %>
+                                    <% }) %>
+                                <% } else { %>
+                                
+                                    <tr>
+                                        <td colspan="4" class="product__cart__item">
+                                            <div class="product__cart__item__text">
+                                                <h6>No orders yet!</h6>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% } %>
+                            </tbody> -->
+                            <tbody>
+                                <% if (orders.length > 0) { %>
+                                    <!-- Sort orders array by placedAt in descending order -->
+                                    <% orders.sort((a, b) => new Date(b.placedAt) - new Date(a.placedAt)).forEach(order => { %>
+                                        <% order.items.forEach(item => { %>
+                                            <tr>
+                                                <td class="product__cart__item">
+                                                    <div class="product__cart__item__pic">
+                                                        <img style="max-width: 100px; max-height: 100px;" src="<%= item.imageUrl %>" alt="<%= item.name %>">
+                                                    </div>
+                                                    <div class="product__cart__item__text">
+                                                        <h6><%= item.name %></h6>
+                                                        <h5><%= item.price %> points</h5>
+                                                    </div> 
+                                                </td>
+                                                <td class="quantity__item">
+                                                    <div class="quantity">
+                                                        <div class="pro-qty-2">
+                                                            <input type="text" value="<%= item.quantity %>" readonly>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="cart__price"><%= item.quantity * item.price %> points</td>
+                                                <td class="cart__price"><%= new Date(order.placedAt).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }) %></td>
+                                            </tr>
+                                        <% }) %>
+                                    <% }) %>
+                                <% } else { %>
+                                    <!-- No orders message -->
+                                    <tr>
+                                        <td colspan="4" class="product__cart__item">
+                                            <div class="product__cart__item__text">
+                                                <h6>No orders yet!</h6>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                            
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="primary-btn">
+                                <a href="/shop" style="color: white;">Continue Shopping</a>
+                            </div>
+                        </div>
+                        <!-- <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="continue__btn update__btn">
+                                <a href="#"><i class="fa fa-spinner"></i> Update cart</a>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+
+    <style>
+
+
+        footer {
+background-color: #0e0a0a;
+ 
+}
+ 
+.footerContainer{
+width: 100%;
+padding: 40px 30px 20px;
+ 
+}
+ 
+.socialIcons{
+ 
+display: flex;
+justify-content: center;
+}
+
+.socialIcons a{
+ 
+text-decoration: none;
+ 
+padding: 10px;
+ 
+background-color: white;
+ 
+margin: 10px;
+ 
+border-radius: 50%;
+ 
+}
+ 
+.socialIcons a i{
+ 
+font-size: 2em;
+ 
+color: black;
+ 
+opacity: 0.9;
+ 
+}
+ 
+ 
+.socialIcons a:hover{
+ 
+background-color: #111;
+ 
+transition: 0.5s;
+ 
+}
+ 
+socialIcons a:hover i{
+ 
+color: white;
+ 
+transition: 0.5s;
+}
+
+
+.footerNav{
+ 
+
+ 
+margin: 20px 0;
+}
+.footerNav ul{
+ 
+display: flex;
+ 
+justify-content: center;
+list-style-type: none;
+ 
+}
+ 
+.footerNav ul li a{
+ 
+color: white;
+ 
+margin: 10px;
+ 
+text-decoration: none;
+ 
+font-size: 1.3em;
+ 
+opacity: 0.7;
+ 
+transition: 0.5s;
+ 
+}
+ 
+.footerNav ul li a:hover{
+ 
+opacity: 1;
+ 
+}
+ 
+.footerBottom{
+ 
+background-color: black;
+ 
+padding: 5px;
+ 
+text-align: center;
+}
+
+.footerBottom p{
+ 
+color: white;
+ 
+}
+ 
+.designer{
+ 
+opacity: 0.7;
+ 
+text-transform: uppercase;
+ 
+letter-spacing: 1px;
+ 
+font-weight: 400;
+ 
+margin: 0px 5px;
+ 
+}
+ 
+@media (max-width: 700px){
+ 
+.footerNav ul{
+ 
+flex-direction: column;
+ 
+}
+.footerNav ul li{
+  width:100%;
+  text-align:center;
+  margin:5px;
+}
+}
+
+    </style>
+    <footer>
+            <div class="footerContainer">
+            <div class="socialIcons">
+                <a href="https://www.facebook.com/thedarwinbox?mibextid=ZbWKwL"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/thedarwinbox/"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://twitter.com/theDarwinbox"><i class="fa-brands fa-twitter"></i></a>
+                <a href="https://in.linkedin.com/company/thedarwinbox"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://youtu.be/6RpPb0a-5zM?si=UT1GKSPb_EmfYb6t"><i class="fa-brands fa-youtube"></i></a>
+    
+            </div>
+            <div class="footerNav">
+                <ul>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/shop">Shop</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contact">Contact Us</a></li>
+                    
+                </ul>
+    
+            </div>
+            </div>
+            <div class="footerBottom">
+                <p>Copyright &copy;2023; Designed by <span class="designer">Darwintrade</span></p>
+            </div> 
+        </footer>
+    <!-- Footer Section End -->
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery.nicescroll.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/jquery.countdown.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/mixitup.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
+

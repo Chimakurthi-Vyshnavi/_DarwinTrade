@@ -1,0 +1,162 @@
+<%- include('adminHeader.ejs')%>
+    <div class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span>Add a Vendor</h4>
+            <div class="container-xxl flex-grow-1 container-p-y">
+                <div class="card mb-4">
+                    <h5 class="card-header"></h5>
+                    <!-- Account -->
+                    <div class="card-body">
+                        <div class="d-flex align-items-start align-items-sm-center gap-4">
+                            <form class="addVendorForm" method="POST">
+                                <h5 class="mb-0">Vendor Details</h5>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="mb-3 col-md-6">
+                                            <label for="firstName" class="form-label">First Name</label>
+                                            <input class="form-control" type="text" id="firstName" name="firstName" placeholder="First name"
+                                                value="" autofocus required/>
+                                            <div class="firstNameError text-danger"></div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="lastName" class="form-label">Last Name</label>
+                                            <input class="form-control" type="text" name="lastName" id="lastName" placeholder="Last name"
+                                                value="" required/>
+                                            <div class="lastNameError text-danger"></div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="email" class="form-label">E-mail</label>
+                                            <input class="form-control" type="email" id="email" name="email" placeholder="Email"
+                                                value="" required/>
+                                            <div class="emailError text-danger"></div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label" for="phoneNumber">Phone Number</label>
+                                            <div class="input-group input-group-merge">
+                                                <input type="text" id="phoneNumber"
+                                                    class="form-control" name="phone" placeholder="Phone number with Country Code"
+                                                    value="" required/>
+                                            </div>
+                                            <div class="phoneError text-danger"></div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="address" class="form-label">Address</label>
+                                            <input type="text" class="form-control" id="address" name="address"
+                                                placeholder="Address" value="%>" required/>
+                                            <div class="addressError text-danger"></div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="city" class="form-label">City</label>
+                                            <input class="form-control" type="text" id="city" name="city"
+                                                placeholder="City" value="" required/>
+                                            <div class="cityError text-danger"></div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="state" class="form-label">State</label>
+                                            <input class="form-control" type="text" id="state" name="state"
+                                                placeholder="State" value="" required/>
+                                            <div class="stateError text-danger"></div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="zipCode" class="form-label">Zip Code</label>
+                                            <input type="text" class="form-control" id="zipCode" name="zip"
+                                                placeholder="Zip Code" value="" maxlength="6" required/>
+                                            <div class="zipError text-danger"></div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label" for="country">Country</label>
+                                            <select id="country" class="select2 form-select" name="country">
+                                                <option value="">Select</option>
+                                                <option value="Australia">Australia</option>
+                                                <option value="Bangladesh">Bangladesh</option>
+                                                <option value="Belarus">Belarus</option>
+                                                <option value="Brazil">Brazil</option>
+                                                <option value="Canada">Canada</option>
+                                                <option value="China">China</option>
+                                                <option value="France">France</option>
+                                                <option value="Germany">Germany</option>
+                                                <option value="India" selected>India</option>
+                                                <option value="Indonesia">Indonesia</option>
+                                                <option value="Israel">Israel</option>
+                                                <option value="Italy">Italy</option>
+                                                <option value="Japan">Japan</option>
+                                                <option value="Korea">Korea, Republic of</option>
+                                                <option value="Mexico">Mexico</option>
+                                                <option value="Philippines">Philippines</option>
+                                                <option value="Russia">Russian Federation</option>
+                                                <option value="South Africa">South Africa</option>
+                                                <option value="Thailand">Thailand</option>
+                                                <option value="Turkey">Turkey</option>
+                                                <option value="Ukraine">Ukraine</option>
+                                                <option value="United Arab Emirates">United Arab Emirates</option>
+                                                <option value="United Kingdom">United Kingdom</option>
+                                                <option value="United States">United States</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="dob" class="form-label">Date of Birth</label>
+                                            <input type="date" class="form-control" id="dob" name="dob"
+                                                 value="" required/>
+                                            <div class="dobError text-danger"></div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="pin" class="form-label">Personal Identification Number</label>
+                                            <input type="text" class="form-control" id="pin" name="pin"
+                                                 value="" required/>  
+                                            <div class="pinError text-danger"></div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label" for="frequency">Frequency</label>
+                                            <select id="frequency" class="select2 form-select" name="frequency">
+                                                <option value="">Select</option>
+                                                <option value="WEEKLY">WEEKLY</option>
+                                                <option value="DAILY">DAILY</option>
+                                                <option value="MONTHLY" selected>MONTHLY</option>
+                                                <option value="QUARTERLY">QUARTERLY</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="delay" class="form-label">Delay</label>
+                                            <input type="number" class="form-control" id="delay" name="delay"
+                                                 value=""/>
+                                            <div class="delayError text-danger"></div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="Commission" class="form-label">Commission Percentage</label>
+                                            <input type="number" class="form-control" id="Commission" name="Commission"
+                                                 value=""/>  
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label" for="recurringCommission">Recurring Commission</label>
+                                            <select id="recurringCommission" class="select2 form-select" name="recurringCommission">
+                                                <option value="">Select</option>
+                                                <option value="Y" selected>Yes</option>
+                                                <option value="N">No</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="language" class="form-label">Language</label>
+                                            <select id="language" class="select2 form-select">
+                                                <option value="">Select Language</option>
+                                                <option value="en" selected>English</option>
+                                                <option value="fr">French</option>
+                                                <option value="de">German</option>
+                                                <option value="pt">Portuguese</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <button type="submit" class="btn btn-primary me-2">Add Vendor</button>
+                                        <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Account -->
+            </div>
+        </div>
+    </div>
+    
+    <%- include('adminFooter.ejs')%>

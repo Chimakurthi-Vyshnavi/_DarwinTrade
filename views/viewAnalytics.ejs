@@ -1,0 +1,190 @@
+<%- include('vendorHeader.ejs')%>
+  <!-- Total Revenue -->
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+      <div class="col-xl">
+        <!-- <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4"> -->
+        <div class="card">
+          <div class="row row-bordered g-0">
+            <div class="col-md-8">
+              <h5 class="card-header m-0 me-2 pb-3">Total Orders</h5>
+              <div id="totalRevenueChart" class="px-2"></div>
+              <div class="card-body ml-3">
+                <div id="lineChart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- </div> -->
+        <!--/ Total Revenue -->
+      </div>
+      <h5 class="pb-1 mb-4 mt-4">Product</h5>
+      <div class="row mb-5">
+        <div class="col-md">
+          <div class="card mb-3">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img class="card-img card-img-left" src="<%= product.thumbnail%>" alt="Card image" />
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <%= product.title%>
+                  </h5>
+                  <p class="card-text">
+                    <%= product.note%>
+                  </p>
+                  <p class="card-text">Price: <strong>
+                      <%= product.price%>
+                    </strong></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+    var data, values = [];
+    const quantitiesMap = new Map();
+    const past10Days = getPast10DaysFormatted()
+
+    function getPast10DaysFormatted() {
+      const currentDate = new Date();
+      const past10Days = [];
+      for (let i = 9; i >= 0; i--) {
+        const date = new Date(currentDate);
+        date.setDate(date.getDate() - i);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
+        past10Days.push(formattedDate);
+      }
+      return past10Days;
+    }
+
+    async function order() {
+      const res = await fetch(`/order/<%= id%>`)
+      await res.json()
+        .then(data => {
+          data.orders.forEach(({ _id, quantity }) => { quantitiesMap.set(_id, quantity); });
+          past10Days.forEach(day => {
+            if (quantitiesMap.has(day)) values.push(quantitiesMap.get(day))
+            else values.push(0)
+          })
+          const lineChartEl = document.querySelector('#lineChart'),
+            lineChartConfig = {
+              chart: {
+                height: 400,
+                type: 'line',
+                parentHeightOffset: 0,
+                zoom: {
+                  enabled: false
+                },
+                toolbar: {
+                  show: false
+                }
+              },
+              series: [
+                {
+                  data: values
+                }
+              ],
+              markers: {
+                strokeWidth: 7,
+                strokeOpacity: 1,
+                strokeColors: [config.colors.white],
+                colors: ['#696cff']
+              },
+              dataLabels: {
+                enabled: false
+              },
+              stroke: {
+                curve: 'straight'
+              },
+              colors: ['#696cff'],
+              grid: {
+                borderColor: "#d9dee3",
+                xaxis: {
+                  lines: {
+                    show: true
+                  }
+                },
+                padding: {
+                  top: -20
+                }
+              },
+              tooltip: {
+                custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+                  return '<div class="px-3 py-2">' + '<span>' + series[seriesIndex][dataPointIndex] + '%</span>' + '</div>';
+                }
+              },
+              xaxis: {
+                categories: getPast10Days(),
+                axisBorder: {
+                  show: false
+                },
+                axisTicks: {
+                  show: false
+                },
+                labels: {
+                  style: {
+                    colors: "#a1acb8",
+                    fontSize: '13px'
+                  }
+                }
+              },
+              yaxis: {
+                labels: {
+                  style: {
+                    colors: "#a1acb8",
+                    fontSize: '13px'
+                  }
+                }
+              }
+            };
+          if (typeof lineChartEl !== undefined && lineChartEl !== null) {
+            const lineChart = new ApexCharts(lineChartEl, lineChartConfig);
+            lineChart.render();
+          }
+
+        })
+        .catch(error => {
+          Swal.fire({
+            title: 'Order Details Not Found!',
+            text: 'Please try again later',
+            icon: 'error',
+            allowOutsideClick: true,
+            backdrop: true,
+            customClass: {
+              confirmButton: 'btn btn-primary alertbtn'
+            },
+            buttonsStyling: false
+          })
+        })
+        $('.alertbtn').on('click',()=>{
+          location.assign('/productAnalytics')
+        })
+    }
+    order()
+
+    function getPast10Days() {
+      let dates = [];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      for (let i = 9; i >= 0; i--) {
+        let date = new Date();
+        date.setDate(date.getDate() - i);
+        let formattedDate = `${date.getDate()} ${months[date.getMonth()]}`;
+        dates.push(formattedDate);
+      }
+      return dates;
+    }
+
+  </script>
+
+  <%- include('vendorFooter.ejs')%>
+            

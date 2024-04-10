@@ -1,0 +1,119 @@
+<%- include('vendorHeader.ejs')%>
+    <div class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span>Edit Product</h4>
+            <div class="container-xxl flex-grow-1 container-p-y">
+                <div class="card mb-4">
+                    <h5 class="card-header"></h5>
+                    <div class="card-body">
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label" for="productid">Product ID</label>
+                            <select id="productid" class="select2 form-select" name="productid">
+                                <option value="">Select</option>
+                                <% products.forEach(product=>{%>
+                                    <option value="<%= product.id%>">
+                                        <%= product.id%> - <%= product.title%>
+                                    </option>
+                                    <%})%>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex align-items-start align-items-sm-center gap-4">
+                            <form id="editProductForm" enctype="multipart/form-data">
+                                <h5 class="mb-0">Product Details</h5>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="mb-3 col-md-6">
+                                            <label for="title" class="form-label">Title</label>
+                                            <input class="form-control" type="text" id="title" name="title" placeholder="Title"
+                                                value="" autofocus readonly/>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="shortdescription" class="form-label">Short Description</label>
+                                            <input class="form-control" type="text" name="shortdescription" id="shortdescription" placeholder="Short Description"
+                                                value=""/>
+                                            <div class="shortdescriptionError text-danger"></div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label" for="brand">Brand</label>
+                                            <div class="input-group input-group-merge">
+                                                <input type="text" id="brand"
+                                                    class="form-control" name="brand" placeholder="Brand"
+                                                    value="" readonly/>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label" for="category">Category</label>
+                                            <select id="category" class="select2 form-select" name="category" disabled>
+                                                <option value="">Select</option>
+                                                <% categories.forEach(category=>{%>
+                                                    <option value="<%= category.category%>"><%= category.category%></option>
+                                                <%})%>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="price" class="form-label">Price</label>
+                                            <input class="form-control" type="text" id="price" name="price" placeholder="Price"
+                                                value="" readonly/>
+                                        </div>
+                                        <div class="mt-3 button-wrapper">
+                                            <label class="form-label fw-semibold">Thumbnail</label>
+                                            <br>
+                                            <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                                <span class="d-none d-sm-block">Upload photo</span>
+                                                <i class="bx bx-upload d-block d-sm-none"></i>
+                                                <input type="file" id="upload" class="account-file-input thumbnail" hidden
+                                                    accept="image/png, image/jpeg, image/jpg" name="thumbnail" />
+                                            </label>
+                                            <img id='previewImage' src=""
+                                                style="max-width: 300px; max-height: 300px; display: none;" />
+                                            <h6 id="filename" class="mt-1"></h6>
+                                        </div>
+                                        <div class="button-wrapper">
+                                            <label class="form-label fw-semibold">Images</label>
+                                            <br>
+                                            <label for="uploads" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                                <span class="d-none d-sm-block">Upload photos</span>
+                                                <i class="bx bx-upload d-block d-sm-none"></i>
+                                                <input type="file" id="uploads" class="account-file-input" hidden
+                                                    accept="image/png, image/jpeg, image/jpg" name="images" multiple />
+                                            </label>
+                                            <div id="imageContainer"></div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="stock" class="form-label">Available Stock</label>
+                                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Stock"
+                                                 value="" />  
+                                            <div class="stockError text-danger"></div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="minStock" class="form-label">Min Stock</label>
+                                            <input type="number" class="form-control" id="minStock" name="minStock" placeholder="Minimum Stock"
+                                                 value="" />  
+                                            <div class="minStockError text-danger"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="productDescription">Description</label>
+                                            <textarea id="productDescription" class="form-control" rows="8" cols="40"
+                                                placeholder="Write Product Description" name="productDescription" value=""></textarea>
+                                            <div class="productDescriptionError text-danger"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="note">Note</label>
+                                            <textarea id="note" class="form-control" rows="4" cols="40"
+                                                placeholder="Write a Short Note" name="note" value=""></textarea>
+                                            <div class="noteError text-danger"></div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" value="" id="outsideClick">Update</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('vendorFooter.ejs')%>
