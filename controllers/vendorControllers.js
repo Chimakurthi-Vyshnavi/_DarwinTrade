@@ -188,14 +188,14 @@ module.exports.postVendorCP = async (req, res) => {
     const { email, currentPassword, newPassword, confirmPassword } = req.body;
     const vendor = await Vendor.findOne({ email : email});
     if (!vendor) {
-        throw 'Vendor not found';
+      throw new Error('incorrect vendorId');
     }
     const isPasswordMatch = await bcrypt.compare(currentPassword, vendor.password);
     if (!isPasswordMatch) {
-        throw 'Incorrect current password';
+      throw new Error('incorrect current password');
     }
     if (newPassword !== confirmPassword) {
-        throw "Passwords don't match";
+      throw new Error("passwords don't match")
     }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);

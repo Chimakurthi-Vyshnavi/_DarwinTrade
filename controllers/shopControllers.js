@@ -9,6 +9,7 @@ module.exports.getShop = async (req, res) => {
     const brands = await ProductSchema.dummyProduct.aggregate([
       { $group: { _id: '$brand', categories: { $addToSet: '$category' } } }
     ])
+    console.log(brands)
     const tags = await ProductSchema.dummyProductTags.find()
     res.render('shop', { mainCategories, brands, tags })
   } catch (error) {
