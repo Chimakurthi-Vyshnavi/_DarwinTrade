@@ -43,8 +43,9 @@ module.exports.postAddProduct = async(req, res)=>{
     }))
    
       const date = new Date()
-      const count = await ProductSchema.dummyProduct.countDocuments({}).maxTimeMS(30000)
+      const count = await ProductSchema.dummyProduct.countDocuments({})
       const mainCategory = await ProductSchema.dummyProductMainCategories.findOne({categories: {$in: req.body.category}})
+      console.log(req.body.title)
       const product = await ProductSchema.dummyProduct.create({
           title: req.body.title.trim(), description: req.body.shortdescription.trim(), price: req.body.price.trim(), stock: req.body.stock.trim(), 
           productDescription: req.body.productDescription.trim(), note: req.body.note.trim(), images: imageUrls, thumbnail: thumbnailUrl, vendorID, 
