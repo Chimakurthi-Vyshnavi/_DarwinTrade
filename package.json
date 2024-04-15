@@ -33,7 +33,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "tests": "mocha ./tests/vendorTest.test.js --exit",
+    "tests": "mocha ./tests/indexTest.test.js --exit",
     "start": "nodemon index.js",
     "coverage": "nyc --reporter=html  --reporter=text mocha tests/*.test.js --timeout 5000 --exit"
   },
