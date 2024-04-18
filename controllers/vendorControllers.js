@@ -106,7 +106,7 @@ module.exports.postEditProduct = async(req, res)=>{
       console.log(imageUrls)
       updated_data['images'] = imageUrls
     }
-    const product = await ProductSchema.dummyProduct.findByIdAndUpdate(req.params.id, updated_data)
+    const product = await ProductSchema.dummyProduct.findOneAndUpdate({id: req.params.id}, updated_data)
     if(!product) throw new Error('incorrect productId')
     console.log(`${vendorID} has changed the product details: ${product}`)
     res.status(200).json({ success: true })

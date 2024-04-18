@@ -229,22 +229,15 @@ const data = {
 
 
 checkProductInWishlist(productId).then(isInWishlist => {
-    // Update the heart icon color based on whether the product exists in the wishlist
     updateHeartColor(isInWishlist);
 
-    // Add click event listener to the heart icon
+ 
     heart_.addEventListener('click', function(event) {
-        // Prevent default behavior of the link (i.e., prevent navigation)
         event.preventDefault();
         event.stopPropagation();
 
-        // Toggle the heart icon color
         heart_img.classList.toggle('text-danger');
-
-        // Update the isInWishlist state
         const isInWishlist = heart_img.classList.contains('text-danger');
-
-        // Send an AJAX request to add/remove the product from the wishlist
         const endpoint = isInWishlist ? '/wishlistadd' : '/wishlistremove';
         fetch(endpoint, {
             method: 'POST',
@@ -260,7 +253,6 @@ checkProductInWishlist(productId).then(isInWishlist => {
             return response.json();
         })
         .then(data => {
-            // alert(data.message);
                         displayAlert(data.message);
         })
    
@@ -892,7 +884,7 @@ if(contactForm.length) {
                 document.getElementById('nameInput').value = '',
                 document.getElementById("emailInput").value= '',
                 document.getElementById("messageInput").value = ''
-                // window.location.reload();
+            
             })
             .catch(error => {
                 console.error("Error sending email:", error);
